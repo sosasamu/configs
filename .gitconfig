@@ -52,6 +52,11 @@
   su = stash -u
   sp = stash pop
 
+[cherry-pick]
+  cp = cherry-pick
+  cpc = cherry-pick --continue
+  cpa = cherry-pick --abort
+
 [hub]
   protocol = https
 [github]

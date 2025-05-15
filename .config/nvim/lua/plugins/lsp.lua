@@ -12,9 +12,17 @@ return {
 				"tailwindcss-language-server",
 				"typescript-language-server",
 				"css-lsp",
+				"prettier",
+				"ts-standard",
 			})
 		end,
 	},
+	{
+		"leafOfTree/vim-svelte-plugin",
+	},
+	{ "othree/html5.vim" },
+	{ "pangloss/vim-javascript" },
+	{ "evanleck/vim-svelte" },
 
 	-- lsp servers
 	{
@@ -23,7 +31,32 @@ return {
 			inlay_hints = { enabled = false },
 			---@type lspconfig.options
 			servers = {
-				cssls = {},
+				marksman = {},
+				cssls = {
+					root_dir = function(...)
+						return require("lspconfig.util").root_pattern("package.json", ".git")
+					end,
+					settings = {
+						css = {
+							validate = true,
+							lint = {
+								unknownAtRules = "ignore",
+							},
+						},
+						scss = {
+							validate = true,
+							lint = {
+								unknownAtRules = "ignore",
+							},
+						},
+						less = {
+							validate = true,
+							lint = {
+								unknownAtRules = "ignore",
+							},
+						},
+					},
+				},
 				tailwindcss = {
 					root_dir = function(...)
 						return require("lspconfig.util").root_pattern(".git")(...)
@@ -131,6 +164,9 @@ return {
 							},
 						},
 					},
+				},
+				svelte = {
+					require("lspconfig").svelte.setup({}),
 				},
 			},
 			setup = {},

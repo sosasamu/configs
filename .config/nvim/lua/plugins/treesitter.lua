@@ -20,11 +20,21 @@ return {
 				"scss",
 				"sql",
 				"svelte",
+				"lua",
+				"ruby",
+				"javascript",
+				"typescript",
+				"tsx",
+				"toml",
+				"json",
+				"yaml",
+				"swift",
+				"html",
+				"kotlin",
+				"vim",
+				"markdown",
+				"markdown_inline",
 			},
-
-			-- matchup = {
-			-- 	enable = true,
-			-- },
 
 			-- https://github.com/nvim-treesitter/playground#query-linter
 			query_linter = {
