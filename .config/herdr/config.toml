@@ -50,5 +50,5 @@ enabled = true
 rows = [["state_icon", "workspace"], ["branch", "git_status"]]
 
 [theme]
-name = "terminal"
+name = "kanagawa"
 auto_switch = false
