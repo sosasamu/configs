@@ -35,4 +35,20 @@ sketchybar --add item clock right \
   --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
   --subscribe battery system_woke power_source_change
 
+# Slack unread badge; click goes to its workspace.
+sketchybar --add item slack left \
+  --set slack icon= update_freq=10 script="$PLUGIN_DIR/slack.sh" \
+    click_script="aerospace workspace 4" \
+  --subscribe slack system_woke
+
+# Items on the right are drawn from the edge inwards: clock, battery, volume, wifi.
+sketchybar --add item volume right \
+  --set volume script="$PLUGIN_DIR/volume.sh" \
+    click_script="open 'x-apple.systempreferences:com.apple.Sound-Settings.extension'" \
+  --subscribe volume volume_change \
+  --add item wifi right \
+  --set wifi label.drawing=off update_freq=30 script="$PLUGIN_DIR/wifi.sh" \
+    click_script="open 'x-apple.systempreferences:com.apple.wifi-settings-extension'" \
+  --subscribe wifi wifi_change system_woke
+
 sketchybar --update
