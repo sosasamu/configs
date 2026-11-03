@@ -29,6 +29,15 @@ automatically-unhide-macos-hidden-apps = false
 
 persistent-workspaces = ['1', '2', '3', '4', '5']
 
+# Fixed monitor per workspace. 'secondary' = the external monitor (any of them);
+# without one, everything falls back to the built-in screen ('main').
+[workspace-to-monitor-force-assignment]
+1 = ['secondary', 'main']
+2 = ['secondary', 'main']
+3 = 'built-in'
+4 = 'built-in'
+5 = 'built-in'
+
 [key-mapping]
 preset = 'qwerty'
 

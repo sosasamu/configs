@@ -46,6 +46,8 @@ AeroSpace acomoda las ventanas en mosaico, con 5 workspaces. Los atajos salen de
 | `Z X C V B` | Mosaico · acordeón · flotante · pantalla completa · workspace anterior |
 | `N M , .` | Achicar · agrandar · mandar el workspace al otro monitor · resetear el layout |
 
+Monitores fijos: 1 (terminal) y 2 (navegador) en el monitor externo; 3, 4 y 5 en la pantalla de la Mac. Sin monitor externo, todo va a la Mac.
+
 El keymap del Kyria vive en `~/Proyects/keyboard/firmware/rev4_layout`.
 
 ## Instalar en una Mac nueva
