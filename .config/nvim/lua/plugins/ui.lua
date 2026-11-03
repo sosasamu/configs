@@ -54,15 +54,15 @@ return {
 	},
 
 	{
-		"rcarriga/nvim-notify",
+		"folke/snacks.nvim",
 		opts = {
-			timeout = 5000,
+			notifier = { timeout = 5000 },
 		},
 	},
 
 	-- animations
 	{
-		"echasnovski/mini.animate",
+		"nvim-mini/mini.animate",
 		event = "VeryLazy",
 		opts = function(_, opts)
 			opts.scroll = {
@@ -139,16 +139,8 @@ return {
 		opts = {
 			plugins = {
 				gitsigns = true,
-				tmux = true,
-				kitty = { enabled = false, font = "+2" },
 			},
 		},
 		keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
-	},
-
-	{
-		"nvimdev/dashboard-nvim",
-		event = "VimEnter",
-		opts = function(_, opts) end,
 	},
 }

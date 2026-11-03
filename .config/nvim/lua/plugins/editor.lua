@@ -1,193 +1,51 @@
 return {
-
+	-- Buscador (fzf-lua). LazyVim ya define <leader><space>, <leader>/ y los <leader>s*;
+	-- acá van los atajos propios con ";".
 	{
-		"folke/flash.nvim",
-		event = "VeryLazy",
-		---@type Flash.Config
-		opts = {},
-  -- stylua: ignore
-    keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
-      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
-    },
-	},
-
-	{
-		"dinhhuy258/git.nvim",
-		event = "BufReadPre",
+		"ibhagwan/fzf-lua",
 		opts = {
-			keymaps = {
-				-- Open blame window
-				blame = "<Leader>gb",
-				-- Open file/folder in git repository
-				browse = "<Leader>go",
-			},
-		},
-	},
-
-	{
-		"telescope.nvim",
-		dependencies = {
-			{
-				"nvim-telescope/telescope-fzf-native.nvim",
-				build = "make",
-			},
-			"nvim-telescope/telescope-file-browser.nvim",
+			files = { hidden = true },
+			grep = { hidden = true },
 		},
 		keys = {
+			{ "<leader><leader>", "<cmd>FzfLua files<cr>", desc = "Find Files (cwd)" },
+			{ ";f", "<cmd>FzfLua files<cr>", desc = "Find Files (cwd)" },
+			{ ";r", "<cmd>FzfLua live_grep<cr>", desc = "Live grep (cwd, incluye ocultos)" },
+			{ "\\\\", "<cmd>FzfLua buffers<cr>", desc = "Buffers" },
+			{ ";t", "<cmd>FzfLua help_tags<cr>", desc = "Help" },
+			{ ";;", "<cmd>FzfLua resume<cr>", desc = "Resume last picker" },
+			{ ";e", "<cmd>FzfLua diagnostics_workspace<cr>", desc = "Diagnostics" },
+			{ ";s", "<cmd>FzfLua treesitter<cr>", desc = "Treesitter symbols" },
 			{
 				"<leader>fP",
 				function()
-					require("telescope.builtin").find_files({
-						cwd = require("lazy.core.config").options.root,
-					})
+					require("fzf-lua").files({ cwd = require("lazy.core.config").options.root })
 				end,
 				desc = "Find Plugin File",
 			},
-			{
-				";f",
-				function()
-					local builtin = require("telescope.builtin")
-					builtin.find_files({
-						no_ignore = false,
-						hidden = true,
-					})
-				end,
-				desc = "Lists files in your current working directory, respects .gitignore",
-			},
-			{
-				";r",
-				function()
-					local builtin = require("telescope.builtin")
-					builtin.live_grep({
-						additional_args = { "--hidden" },
-					})
-				end,
-				desc = "Search for a string in your current working directory and get results live as you type, respects .gitignore",
-			},
-			{
-				"\\\\",
-				function()
-					local builtin = require("telescope.builtin")
-					builtin.buffers()
-				end,
-				desc = "Lists open buffers",
-			},
-			{
-				";t",
-				function()
-					local builtin = require("telescope.builtin")
-					builtin.help_tags()
-				end,
-				desc = "Lists available help tags and opens a new window with the relevant help info on <cr>",
-			},
-			{
-				";;",
-				function()
-					local builtin = require("telescope.builtin")
-					builtin.resume()
-				end,
-				desc = "Resume the previous telescope picker",
-			},
-			{
-				";e",
-				function()
-					local builtin = require("telescope.builtin")
-					builtin.diagnostics()
-				end,
-				desc = "Lists Diagnostics for all open buffers or a specific buffer",
-			},
-			{
-				";s",
-				function()
-					local builtin = require("telescope.builtin")
-					builtin.treesitter()
-				end,
-				desc = "Lists Function names, variables, from Treesitter",
-			},
-			{
-				"sf",
-				function()
-					local telescope = require("telescope")
+		},
+	},
 
-					local function telescope_buffer_dir()
-						return vim.fn.expand("%:p:h")
-					end
+	-- Explorador
+	{
+		"nvim-neo-tree/neo-tree.nvim",
+		keys = {
+			{ "sf", "<cmd>Neotree reveal<cr>", desc = "Explorer en el archivo actual" },
+		},
+	},
 
-					telescope.extensions.file_browser.file_browser({
-						path = "%:p:h",
-						cwd = telescope_buffer_dir(),
-						respect_gitignore = false,
-						hidden = true,
-						grouped = true,
-						previewer = false,
-						initial_mode = "normal",
-						layout_config = { height = 40 },
-					})
+	-- Abrir el archivo en Bitbucket/GitHub (blame queda en <leader>gb de LazyVim)
+	{
+		"folke/snacks.nvim",
+		keys = {
+			{
+				"<leader>go",
+				function()
+					Snacks.gitbrowse()
 				end,
-				desc = "Open File Browser with the path of the current buffer",
+				desc = "Git Browse",
+				mode = { "n", "x" },
 			},
 		},
-		config = function(_, opts)
-			local telescope = require("telescope")
-			local actions = require("telescope.actions")
-			local fb_actions = require("telescope").extensions.file_browser.actions
-
-			opts.defaults = vim.tbl_deep_extend("force", opts.defaults, {
-				wrap_results = true,
-				layout_strategy = "horizontal",
-				layout_config = { prompt_position = "top" },
-				sorting_strategy = "ascending",
-				winblend = 0,
-				mappings = {
-					n = {},
-				},
-			})
-			opts.pickers = {
-				diagnostics = {
-					theme = "ivy",
-					initial_mode = "normal",
-					layout_config = {
-						preview_cutoff = 9999,
-					},
-				},
-			}
-			opts.extensions = {
-				file_browser = {
-					theme = "dropdown",
-					-- disables netrw and use telescope-file-browser in its place
-					hijack_netrw = true,
-					mappings = {
-						-- your custom insert mode mappings
-						["n"] = {
-							-- your custom normal mode mappings
-							["N"] = fb_actions.create,
-							["h"] = fb_actions.goto_parent_dir,
-							["/"] = function()
-								vim.cmd("startinsert")
-							end,
-							["<C-u>"] = function(prompt_bufnr)
-								for i = 1, 10 do
-									actions.move_selection_previous(prompt_bufnr)
-								end
-							end,
-							["<C-d>"] = function(prompt_bufnr)
-								for i = 1, 10 do
-									actions.move_selection_next(prompt_bufnr)
-								end
-							end,
-							["<PageUp>"] = actions.preview_scrolling_up,
-							["<PageDown>"] = actions.preview_scrolling_down,
-						},
-					},
-				},
-			}
-			telescope.setup(opts)
-			require("telescope").load_extension("fzf")
-			require("telescope").load_extension("file_browser")
-		end,
 	},
 }

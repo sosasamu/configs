@@ -1,41 +1,30 @@
 return {
 	-- tools
 	{
-		"williamboman/mason.nvim",
+		"mason-org/mason.nvim",
 		opts = function(_, opts)
 			vim.list_extend(opts.ensure_installed, {
 				"stylua",
 				"selene",
-				"luacheck",
 				"shellcheck",
 				"shfmt",
-				"tailwindcss-language-server",
-				"typescript-language-server",
 				"css-lsp",
-				"prettier",
-				"ts-standard",
 			})
 		end,
 	},
-	{
-		"leafOfTree/vim-svelte-plugin",
-	},
-	{ "othree/html5.vim" },
-	{ "pangloss/vim-javascript" },
-	{ "evanleck/vim-svelte" },
 
 	-- lsp servers
 	{
 		"neovim/nvim-lspconfig",
 		opts = {
 			inlay_hints = { enabled = false },
-			---@type lspconfig.options
+			---@type table<string, vim.lsp.Config>
 			servers = {
 				marksman = {},
+				-- Solo en proyectos Angular (angular.json / nx.json), no en cualquier archivo TS
+				angularls = { workspace_required = true },
 				cssls = {
-					root_dir = function(...)
-						return require("lspconfig.util").root_pattern("package.json", ".git")
-					end,
+					root_markers = { "package.json", ".git" },
 					settings = {
 						css = {
 							validate = true,
@@ -57,41 +46,6 @@ return {
 						},
 					},
 				},
-				tailwindcss = {
-					root_dir = function(...)
-						return require("lspconfig.util").root_pattern(".git")(...)
-					end,
-				},
-				tsserver = {
-					root_dir = function(...)
-						return require("lspconfig.util").root_pattern(".git")(...)
-					end,
-					single_file_support = false,
-					settings = {
-						typescript = {
-							inlayHints = {
-								includeInlayParameterNameHints = "literal",
-								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-								includeInlayFunctionParameterTypeHints = true,
-								includeInlayVariableTypeHints = false,
-								includeInlayPropertyDeclarationTypeHints = true,
-								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
-							},
-						},
-						javascript = {
-							inlayHints = {
-								includeInlayParameterNameHints = "all",
-								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-								includeInlayFunctionParameterTypeHints = true,
-								includeInlayVariableTypeHints = true,
-								includeInlayPropertyDeclarationTypeHints = true,
-								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
-							},
-						},
-					},
-				},
 				html = {},
 				yamlls = {
 					settings = {
@@ -101,7 +55,6 @@ return {
 					},
 				},
 				lua_ls = {
-					-- enabled = false,
 					single_file_support = true,
 					settings = {
 						Lua = {
@@ -111,11 +64,6 @@ return {
 							completion = {
 								workspaceWord = true,
 								callSnippet = "Both",
-							},
-							misc = {
-								parameters = {
-									-- "--log-level=trace",
-								},
 							},
 							hint = {
 								enable = true,
@@ -133,7 +81,6 @@ return {
 							},
 							diagnostics = {
 								disable = { "incomplete-signature-doc", "trailing-space" },
-								-- enable = false,
 								groupSeverity = {
 									strong = "Warning",
 									strict = "Warning",
@@ -156,17 +103,9 @@ return {
 							},
 							format = {
 								enable = false,
-								defaultConfig = {
-									indent_style = "space",
-									indent_size = "2",
-									continuation_indent_size = "2",
-								},
 							},
 						},
 					},
-				},
-				svelte = {
-					require("lspconfig").svelte.setup({}),
 				},
 			},
 			setup = {},

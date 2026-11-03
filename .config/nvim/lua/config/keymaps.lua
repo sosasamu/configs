@@ -18,10 +18,7 @@ keymap.set("n", "-", "<C-x>")
 keymap.set("n", "dw", 'vb"_d')
 
 -- Select all
-keymap.set("n", "<C-a>", "gg<S-v>G")
-
--- Save with root permission (not working for now)
---vim.api.nvim_create_user_command('W', 'w !sudo tee > /dev/null %', {})
+keymap.set("n", "<C-n>", "gg<S-v>G")
 
 -- Disable continuations
 keymap.set("n", "<Leader>o", "o<Esc>^Da", opts)
@@ -32,8 +29,6 @@ keymap.set("n", "<C-m>", "<C-i>", opts)
 
 -- New tab
 keymap.set("n", "te", ":tabedit")
-keymap.set("n", "<tab>", ":tabnext<Return>", opts)
-keymap.set("n", "<s-tab>", ":tabprev<Return>", opts)
 -- Split window
 keymap.set("n", "ss", ":split<Return>", opts)
 keymap.set("n", "sv", ":vsplit<Return>", opts)
@@ -51,7 +46,7 @@ keymap.set("n", "<C-w><down>", "<C-w>-")
 
 -- Diagnostics
 keymap.set("n", "<C-j>", function()
-	vim.diagnostic.goto_next()
+	vim.diagnostic.jump({ count = 1, float = true })
 end, opts)
 
 keymap.set("n", "<leader>r", function()
@@ -59,9 +54,13 @@ keymap.set("n", "<leader>r", function()
 end)
 
 keymap.set("n", "<leader>i", function()
-	require("craftzdog.lsp").toggleInlayHints()
-end)
+	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
+end, { desc = "Toggle inlay hints" })
 
-keymap.set("n", "<leader>E", function()
-	require("craftzdog.lsp").inlineError()
-end)
+keymap.set("n", "<leader>E", vim.diagnostic.open_float, { desc = "Line diagnostics" })
+
+-- Navigate from terminal mode (e.g. Claude panel) to other windows.
+-- Use <M-h/l/k> (Alt + h/l/k) since <C-h> is reserved by Ghostty.
+keymap.set("t", "<M-h>", "<C-\\><C-n><C-w>h", opts)
+keymap.set("t", "<M-l>", "<C-\\><C-n><C-w>l", opts)
+keymap.set("t", "<M-k>", "<C-\\><C-n><C-w>k", opts)
