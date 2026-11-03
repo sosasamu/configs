@@ -13,6 +13,7 @@ La config de Neovim partió de [craftzdog/dotfiles-public](https://github.com/cr
 | `.config/ghostty/config` | `~/.config/ghostty/config` | Terminal Ghostty (fuente) |
 | `Library/Application Support/com.mitchellh.ghostty/config` | `~/Library/Application Support/com.mitchellh.ghostty/config` | Ghostty (tema, fuente, atajos) |
 | `.config/herdr/config.toml` | `~/.config/herdr/config.toml` | herdr (atajos y tema) |
+| `Library/Application Support/tuios/` | `~/Library/Application Support/tuios` | tuios (multiplexor de terminal, con los atajos de herdr) |
 | `.config/aerospace/` | `~/.config/aerospace` | AeroSpace (ventanas en mosaico) |
 | `.config/sketchybar/` | `~/.config/sketchybar` | SketchyBar (barra con workspaces, reloj y batería) |
 | `.config/borders/` | `~/.config/borders` | JankyBorders (borde en la ventana activa) |
@@ -95,6 +96,7 @@ El keymap del Kyria vive en `~/Proyects/keyboard/firmware/rev4_layout`.
    ln -s $C/.config/ghostty/config ~/.config/ghostty/config
    ln -s "$C/Library/Application Support/com.mitchellh.ghostty/config" "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
    ln -s $C/.config/herdr/config.toml ~/.config/herdr/config.toml
+   ln -s "$C/Library/Application Support/tuios" "$HOME/Library/Application Support/tuios"
    ln -s $C/.config/aerospace ~/.config/aerospace
    ln -s $C/.config/sketchybar ~/.config/sketchybar
    ln -s $C/.config/borders ~/.config/borders

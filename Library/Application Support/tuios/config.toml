@@ -1,0 +1,64 @@
+# tuios: terminal multiplexer, set up with the same keys as herdr.
+# Docs: https://tuios.dev/docs/configuration
+#
+# Two modes: terminal mode (typing goes to the pane) and window mode (letters
+# manage panes). Leader + Esc goes to window mode; i or Enter goes back.
+# A herdr tab is a tuios workspace.
+
+[startup]
+tiled = true
+daemon = true
+
+[appearance]
+theme = "tokyonight"
+show_clock = true
+calm = false
+
+[keybindings]
+leader_key = "ctrl+space"
+
+# Same keys as herdr after the prefix.
+[keybindings.prefix_mode]
+prefix_split_vertical = ["v", "|", "\\"]
+prefix_split_horizontal = ["d", "-"]
+terminal_focus_left = ["h", "left"]
+terminal_focus_down = ["j", "down"]
+terminal_focus_up = ["k", "up"]
+terminal_focus_right = ["l", "right"]
+new_workspace = ["t"]
+next_workspace = ["n"]
+prev_workspace = ["p"]
+prefix_toggle_sidebar = ["b"]
+prefix_fullscreen = ["enter", "z"]
+# Space toggled tiling, too easy to hit right after the prefix.
+prefix_toggle_tiling = ["ctrl+f"]
+
+# tuios defaults that used those keys, moved out of the way.
+prefix_detach = ["ctrl+d"]
+prefix_review = ["ctrl+v"]
+prefix_jump_notif = ["ctrl+o"]
+prefix_keybinds = ["ctrl+k"]
+prefix_window = ["ctrl+t"]
+prefix_next_window = ["tab"]
+prefix_prev_window = ["shift+tab"]
+prefix_inbox = ["u"]
+prefix_transfers = []
+toggle_scratch = ["ctrl+g"]
+nest = []
+
+[[keybindings.command]]
+key = "prefix+i"
+type = "pane"
+command = "ENABLE_IDE_INTEGRATION=true claude"
+description = "Claude Code"
+
+[[keybindings.command]]
+key = "prefix+g"
+type = "popup"
+command = "lazygit"
+description = "lazygit"
+width = "90%"
+height = "90%"
+
+[spotlight]
+enabled = false

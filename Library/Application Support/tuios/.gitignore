@@ -1,0 +1,4 @@
+# tuios writes its state here (logs, sessions, scrollback). Only the config is versioned.
+*
+!.gitignore
+!config.toml

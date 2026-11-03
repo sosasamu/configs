@@ -60,6 +60,8 @@ brew "starship"
 brew "terraform"
 # Parser generator tool
 brew "tree-sitter-cli"
+# Terminal UI OS (Terminal Multiplexer)
+brew "tuios"
 # Watch files and take action when they change
 brew "watchman"
 # Shell extension to navigate your filesystem faster
