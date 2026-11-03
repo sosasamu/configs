@@ -5,16 +5,25 @@
 #   meh   = ctrl-alt-shift       ->  move
 # Each key of that layer sends one of these combos, so nothing collides with
 # Neovim, herdr or the Option accents (á, ñ).
+#
+# Without the Kyria: Caps Lock is a leader key. Caps Lock sends F18, F18 enters
+# the 'wm' mode, and the next key runs one action and goes back to normal.
 
 config-version = 2
 
 start-at-login = true
 auto-reload-config = true
 
-# Tell SketchyBar which workspace is focused.
+# Caps Lock -> F18 (macOS resets this on reboot, so it runs on every start).
+after-startup-command = [
+  '''exec-and-forget hidutil property --set '{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039,"HIDKeyboardModifierMappingDst":0x70000006D}]}' '''
+]
+
+# Tell SketchyBar which workspace is focused and when the leader mode is on.
 exec-on-workspace-change = ['/bin/bash', '-c',
   'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
 ]
+on-mode-changed = ['exec-and-forget sketchybar --trigger aerospace_mode_change']
 
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
@@ -162,3 +171,42 @@ cmd-alt-ctrl-shift-minus = 'resize smart -50'
 cmd-alt-ctrl-shift-equal = 'resize smart +50'
 ctrl-alt-shift-m = 'move-workspace-to-monitor --wrap-around next'
 cmd-alt-ctrl-shift-r = 'flatten-workspace-tree'
+
+# Leader: Caps Lock (= F18), then one key. Same keys as the Kyria WM shortcuts:
+# hyper-X -> X, meh-X -> shift-X. Esc or Caps Lock again cancels.
+f18 = 'mode wm'
+
+[mode.wm.binding]
+esc = 'mode main'
+f18 = 'mode main'
+
+1 = ['workspace 1', 'mode main']
+2 = ['workspace 2', 'mode main']
+3 = ['workspace 3', 'mode main']
+4 = ['workspace 4', 'mode main']
+5 = ['workspace 5', 'mode main']
+shift-1 = ['move-node-to-workspace 1 --focus-follows-window', 'mode main']
+shift-2 = ['move-node-to-workspace 2 --focus-follows-window', 'mode main']
+shift-3 = ['move-node-to-workspace 3 --focus-follows-window', 'mode main']
+shift-4 = ['move-node-to-workspace 4 --focus-follows-window', 'mode main']
+shift-5 = ['move-node-to-workspace 5 --focus-follows-window', 'mode main']
+
+h = ['focus --boundaries all-monitors-outer-frame left', 'mode main']
+j = ['focus --boundaries all-monitors-outer-frame down', 'mode main']
+k = ['focus --boundaries all-monitors-outer-frame up', 'mode main']
+l = ['focus --boundaries all-monitors-outer-frame right', 'mode main']
+shift-h = ['move left', 'mode main']
+shift-j = ['move down', 'mode main']
+shift-k = ['move up', 'mode main']
+shift-l = ['move right', 'mode main']
+
+t = ['layout tiles horizontal vertical', 'mode main']
+a = ['layout accordion horizontal vertical', 'mode main']
+f = ['layout floating tiling', 'mode main']
+shift-f = ['fullscreen', 'mode main']
+b = ['workspace-back-and-forth', 'mode main']
+
+minus = ['resize smart -50', 'mode main']
+equal = ['resize smart +50', 'mode main']
+shift-m = ['move-workspace-to-monitor --wrap-around next', 'mode main']
+r = ['flatten-workspace-tree', 'mode main']

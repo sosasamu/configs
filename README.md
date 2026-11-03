@@ -46,6 +46,18 @@ AeroSpace acomoda las ventanas en mosaico, con 5 workspaces. Los atajos salen de
 | `Z X C V B` | Mosaico · acordeón · flotante · pantalla completa · workspace anterior |
 | `N M , .` | Achicar · agrandar · mandar el workspace al otro monitor · resetear el layout |
 
+**Sin el Kyria**: Caps Lock es tecla líder. Se aprieta y suelta Caps Lock (la barra muestra `WM`) y después una tecla:
+
+| Después de Caps Lock | Hace |
+|---|---|
+| `1`–`5` / `Shift+1`–`5` | Ir al workspace / mandar la ventana ahí |
+| `H J K L` / `Shift+H J K L` | Foco / mover la ventana ← ↓ ↑ → |
+| `T` `A` `F` `Shift+F` `B` | Mosaico · acordeón · flotante · pantalla completa · workspace anterior |
+| `-` `=` `Shift+M` `R` | Achicar · agrandar · mandar el workspace al otro monitor · resetear el layout |
+| `Esc` | Cancelar |
+
+AeroSpace hace que Caps Lock mande `F18` con `hidutil` cada vez que arranca, así que Caps Lock ya no activa las mayúsculas.
+
 Monitores fijos: 1 (terminal) y 2 (navegador) en el monitor externo; 3, 4 y 5 en la pantalla de la Mac. Sin monitor externo, todo va a la Mac.
 
 El keymap del Kyria vive en `~/Proyects/keyboard/firmware/rev4_layout`.
