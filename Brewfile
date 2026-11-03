@@ -1,4 +1,6 @@
+tap "felixkratz/formulae"
 tap "mobile-dev-inc/tap"
+tap "nikitabobko/tap"
 tap "stripe/stripe-cli"
 # Zstandard is a real-time compression algorithm
 brew "zstd"
@@ -62,6 +64,10 @@ brew "tree-sitter-cli"
 brew "watchman"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
+# Colored border around the focused window
+brew "felixkratz/formulae/borders", trusted: true
+# Custom macOS status bar
+brew "felixkratz/formulae/sketchybar", trusted: true
 # The easiest way to automate UI testing for your mobile app
 brew "mobile-dev-inc/tap/maestro", trusted: true
 # Stripe CLI utility
@@ -69,6 +75,8 @@ brew "stripe/stripe-cli/stripe", trusted: true
 # Android SDK component
 cask "android-platform-tools"
 cask "font-jetbrains-mono-nerd-font"
+# Tiling window manager
+cask "nikitabobko/tap/aerospace"
 # Reverse proxy, secure introspectable tunnels to localhost
 cask "ngrok"
 # Plugin for AWS CLI to start and end sessions that connect to managed instances

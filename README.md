@@ -13,6 +13,9 @@ La config de Neovim partió de [craftzdog/dotfiles-public](https://github.com/cr
 | `.config/ghostty/config` | `~/.config/ghostty/config` | Terminal Ghostty (fuente) |
 | `Library/Application Support/com.mitchellh.ghostty/config` | `~/Library/Application Support/com.mitchellh.ghostty/config` | Ghostty (tema, fuente, atajos) |
 | `.config/herdr/config.toml` | `~/.config/herdr/config.toml` | herdr (atajos y tema) |
+| `.config/aerospace/` | `~/.config/aerospace` | AeroSpace (ventanas en mosaico) |
+| `.config/sketchybar/` | `~/.config/sketchybar` | SketchyBar (barra con workspaces, reloj y batería) |
+| `.config/borders/` | `~/.config/borders` | JankyBorders (borde en la ventana activa) |
 | `.gitconfig` | `~/.gitconfig` | Git |
 | `.gitignore_global` | `~/.gitignore` | Archivos que git ignora en todos los repos |
 | `Brewfile` | — | Todo lo instalado con Homebrew |
@@ -29,6 +32,21 @@ No están acá: `~/.gitconfig-spacedev` (identidad de trabajo) y la config de Cl
 - **Node** con nvm · **Java** con `JAVA_HOME` (JDK 17)
 
 Las claves (Anthropic, Obsidian) no están en el repo: `.zshrc` las lee del llavero de macOS.
+
+## Ventanas: AeroSpace
+
+AeroSpace acomoda las ventanas en mosaico, con 5 workspaces. Los atajos salen de la capa **WM** del Kyria: se mantiene el pulgar derecho exterior y la pantallita muestra el mapa. Cada tecla manda Hyper (`Cmd+Opt+Ctrl+Shift`) o Meh (`Opt+Ctrl+Shift`) + una tecla, así que no chocan con Neovim, herdr ni las tildes.
+
+| Capa WM | Hace |
+|---|---|
+| `Q W E R T` | Ir al workspace 1–5 |
+| `A S D F G` | Mandar la ventana al workspace 1–5 |
+| `H J K L` | Foco ← ↓ ↑ → (pasa al otro monitor) |
+| `Y U I O` | Mover la ventana ← ↓ ↑ → |
+| `Z X C V B` | Mosaico · acordeón · flotante · pantalla completa · workspace anterior |
+| `N M , .` | Achicar · agrandar · mandar el workspace al otro monitor · resetear el layout |
+
+El keymap del Kyria vive en `~/Proyects/keyboard/firmware/rev4_layout`.
 
 ## Instalar en una Mac nueva
 
@@ -63,6 +81,9 @@ Las claves (Anthropic, Obsidian) no están en el repo: `.zshrc` las lee del llav
    ln -s $C/.config/ghostty/config ~/.config/ghostty/config
    ln -s "$C/Library/Application Support/com.mitchellh.ghostty/config" "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
    ln -s $C/.config/herdr/config.toml ~/.config/herdr/config.toml
+   ln -s $C/.config/aerospace ~/.config/aerospace
+   ln -s $C/.config/sketchybar ~/.config/sketchybar
+   ln -s $C/.config/borders ~/.config/borders
    ```
 
 5. **Claves en el llavero** (cada comando pide el valor):
@@ -71,6 +92,17 @@ Las claves (Anthropic, Obsidian) no están en el repo: `.zshrc` las lee del llav
    security add-generic-password -a "$USER" -s obsidian-api-key -w
    security add-generic-password -a "$USER" -s obsidian-api-key-onsend-vault -w
    ```
+
+6. **Ventanas**:
+   - Abrir AeroSpace y darle permiso en *Ajustes del Sistema → Privacidad y seguridad → Accesibilidad*. Arranca solo al iniciar sesión.
+   - Barra y bordes: `brew services start sketchybar && brew services start borders`
+   - Ajustes de macOS:
+     ```sh
+     defaults write com.apple.dock expose-group-apps -bool true && killall Dock   # Mission Control agrupa por app
+     defaults write -g NSWindowShouldDragOnGesture -bool true                    # mover ventanas con Ctrl+Cmd+arrastrar
+     defaults write com.apple.spaces spans-displays -bool true                   # un solo Space para los dos monitores (hay que cerrar sesión)
+     ```
+   - Ocultar la barra de menú: *Ajustes del Sistema → Centro de control → Ocultar automáticamente la barra de menú → Siempre*.
 
 ## Mantenimiento
 

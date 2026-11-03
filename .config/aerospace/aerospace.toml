@@ -1,0 +1,155 @@
+# AeroSpace (tiling window manager). Docs: https://nikitabobko.github.io/AeroSpace/guide
+#
+# The shortcuts are sent by the WM layer of the Kyria (hold the outer right thumb key):
+#   hyper = cmd-alt-ctrl-shift   ->  go / focus
+#   meh   = ctrl-alt-shift       ->  move
+# Each key of that layer sends one of these combos, so nothing collides with
+# Neovim, herdr or the Option accents (á, ñ).
+
+config-version = 2
+
+start-at-login = true
+auto-reload-config = true
+
+# Tell SketchyBar which workspace is focused.
+exec-on-workspace-change = ['/bin/bash', '-c',
+  'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+]
+
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# 0 = accordion windows use the whole screen (no side margins).
+accordion-padding = 0
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+automatically-unhide-macos-hidden-apps = false
+
+persistent-workspaces = ['1', '2', '3', '4', '5']
+
+[key-mapping]
+preset = 'qwerty'
+
+# No gaps: windows use the whole screen.
+# outer.top: macOS already reserves the notch strip on the built-in screen, where
+# SketchyBar sits; other monitors need 32 px for the bar.
+[gaps]
+inner.horizontal = 0
+inner.vertical = 0
+outer.left = 0
+outer.right = 0
+outer.bottom = 0
+outer.top = [{ monitor.built-in = 0 }, 32]
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
+# Each app opens in its own workspace.
+
+# Workspace 1 terminal
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = 'move-node-to-workspace 1'
+
+
+# Workspace 2 browsers
+[[on-window-detected]]
+if.app-id = 'com.brave.Browser'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'org.mozilla.firefox'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari'
+run = 'move-node-to-workspace 2'
+
+
+# Workspace 3 code and dev tools
+[[on-window-detected]]
+if.app-id = 'com.todesktop.230313mzl4w4u92'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.dt.Xcode'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'com.google.android.studio'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'com.postmanlabs.mac'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'app.yaak.desktop'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'org.pgadmin.pgadmin4'
+run = 'move-node-to-workspace 3'
+
+
+# Workspace 4 chat
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = 'move-node-to-workspace 4'
+
+
+# Workspace 5 notes and music
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = 'move-node-to-workspace 5'
+
+[[on-window-detected]]
+if.app-id = 'com.spotify.client'
+run = 'move-node-to-workspace 5'
+
+[mode.main.binding]
+# Workspaces: WM layer Q W E R T / A S D F G
+cmd-alt-ctrl-shift-1 = 'workspace 1'
+cmd-alt-ctrl-shift-2 = 'workspace 2'
+cmd-alt-ctrl-shift-3 = 'workspace 3'
+cmd-alt-ctrl-shift-4 = 'workspace 4'
+cmd-alt-ctrl-shift-5 = 'workspace 5'
+ctrl-alt-shift-1 = 'move-node-to-workspace 1 --focus-follows-window'
+ctrl-alt-shift-2 = 'move-node-to-workspace 2 --focus-follows-window'
+ctrl-alt-shift-3 = 'move-node-to-workspace 3 --focus-follows-window'
+ctrl-alt-shift-4 = 'move-node-to-workspace 4 --focus-follows-window'
+ctrl-alt-shift-5 = 'move-node-to-workspace 5 --focus-follows-window'
+
+# Focus and move: WM layer H J K L / Y U I O. Focus crosses to the other monitor.
+cmd-alt-ctrl-shift-h = 'focus --boundaries all-monitors-outer-frame left'
+cmd-alt-ctrl-shift-j = 'focus --boundaries all-monitors-outer-frame down'
+cmd-alt-ctrl-shift-k = 'focus --boundaries all-monitors-outer-frame up'
+cmd-alt-ctrl-shift-l = 'focus --boundaries all-monitors-outer-frame right'
+ctrl-alt-shift-h = 'move left'
+ctrl-alt-shift-j = 'move down'
+ctrl-alt-shift-k = 'move up'
+ctrl-alt-shift-l = 'move right'
+
+# Layout: WM layer Z X C V B
+cmd-alt-ctrl-shift-t = 'layout tiles horizontal vertical'
+cmd-alt-ctrl-shift-a = 'layout accordion horizontal vertical'
+cmd-alt-ctrl-shift-f = 'layout floating tiling'
+ctrl-alt-shift-f = 'fullscreen'
+cmd-alt-ctrl-shift-b = 'workspace-back-and-forth'
+
+# Resize, monitor, reset: WM layer N M , .
+cmd-alt-ctrl-shift-minus = 'resize smart -50'
+cmd-alt-ctrl-shift-equal = 'resize smart +50'
+ctrl-alt-shift-m = 'move-workspace-to-monitor --wrap-around next'
+cmd-alt-ctrl-shift-r = 'flatten-workspace-tree'
