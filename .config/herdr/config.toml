@@ -19,12 +19,21 @@ key = "prefix+i"
 type = "pane"
 command = "sh -c 'cd \"$HERDR_ACTIVE_PANE_CWD\" && ENABLE_IDE_INTEGRATION=true claude'"
 
+[[keys.command]]
+key = "prefix+g"
+type = "popup"
+command = "sh -c 'cd \"$HERDR_ACTIVE_PANE_CWD\" && lazygit'"
+width = "90%"
+height = "90%"
+description = "lazygit"
+
 [experimental]
 pane_history = true
 
 switch_ascii_input_source_in_prefix = true
 [ui]
 show_agent_labels_on_pane_borders = true
+tab_bar_right = [{ type = "datetime", format = "%H:%M" }]
 
 agent_panel_scope = "all"
 mobile_width_threshold = 100
@@ -37,6 +46,9 @@ delivery = "herdr"
 [ui.sound]
 enabled = true
 
+[ui.sidebar.spaces]
+rows = [["state_icon", "workspace"], ["branch", "git_status"]]
+
 [theme]
-name = "tokyo-night"
+name = "terminal"
 auto_switch = false
