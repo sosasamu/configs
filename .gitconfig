@@ -2,9 +2,7 @@
 [user]
 	name = samuel
 	email = sosamaximilianosamuel@gmail.com
-# Please adapt and uncomment the following lines:
-#	name = Samuel Sosa
-#	email = sosamaximilianosamuel@gmail.com
+
 [url "https://"]
 	insteadOf = git://
 [init]
@@ -12,7 +10,7 @@
 
 [core]
 	excludesfile = ~/.gitignore
-	editor = nvim
+	editor = cursor
 	ignorecase = false
 [push]
   default = simple
@@ -31,6 +29,7 @@
   ci = commit
   ca = commit -a
   cm = commit -m
+  cmsp = "!f() { git commit -m \"$*\" --author \"Samuel Sosa <ssosa@spacedev.io>\"; }; f"
   ps = push origin
   plo = pull origin
   st = status
@@ -76,3 +75,13 @@
 	process = git-lfs filter-process
 [ghq]
   root = ~/.ghq
+
+# Identidad SpaceDev según la URL del remote (Bitbucket + Azure DevOps)
+[includeIf "hasconfig:remote.*.url:git@bitbucket.org:spaceuy/**"]
+	path = ~/.gitconfig-spacedev
+[includeIf "hasconfig:remote.*.url:https://**bitbucket.org/spaceuy/**"]
+	path = ~/.gitconfig-spacedev
+[includeIf "hasconfig:remote.*.url:git@ssh.dev.azure.com:v3/**"]
+	path = ~/.gitconfig-spacedev
+[includeIf "hasconfig:remote.*.url:https://**dev.azure.com/**"]
+	path = ~/.gitconfig-spacedev

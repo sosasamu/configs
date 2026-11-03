@@ -1,0 +1,42 @@
+onboarding = false
+
+[keys]
+prefix = "ctrl+space"
+split_vertical = "prefix+v"
+split_horizontal = "prefix+d"
+focus_pane_left = "prefix+h"
+focus_pane_right = "prefix+l"
+focus_pane_up = "prefix+k"
+focus_pane_down = "prefix+j"
+new_tab = "prefix+t"
+next_tab = "prefix+n"
+previous_tab = "prefix+p"
+toggle_sidebar = "prefix+b"
+zoom = "prefix+enter"
+
+[[keys.command]]
+key = "prefix+i"
+type = "pane"
+command = "sh -c 'cd \"$HERDR_ACTIVE_PANE_CWD\" && ENABLE_IDE_INTEGRATION=true claude'"
+
+[experimental]
+pane_history = true
+
+switch_ascii_input_source_in_prefix = true
+[ui]
+show_agent_labels_on_pane_borders = true
+
+agent_panel_scope = "all"
+mobile_width_threshold = 100
+
+agent_panel_sort = "priority"
+status_indicators = "symbols"
+[ui.toast]
+delivery = "herdr"
+
+[ui.sound]
+enabled = true
+
+[theme]
+name = "tokyo-night"
+auto_switch = false
